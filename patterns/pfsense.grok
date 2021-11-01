@@ -1,0 +1,13 @@
+### Globomantics pfsense Filter ###
+# %{FW_PFSENSE_LOG}(%{FW_PFSENSE_IP_INFO}|%{FW_PFSENSE_IP_INFO_WITH_ECN})%{FW_PFSENSE_PROTO_INFO}
+
+FW_PFSENSE_LOG (%{INT:rule.id}),(%{INT:rule.uuid})?,,(%{INT:rule.tracker.id}),(%{WORD:interface.name}),(%{WORD:reason}),(%{WORD:event.action}),(%{WORD:network.direction}),(%{INT:network.type})
+
+FW_PFSENSE_IP_INFO (%{BASE16NUM:tos}),,(%{INT:ttl}),(%{INT:packet.id}),(%{INT:fragment.offset}),(%{WORD:flags}),(%{INT:network.iana_number}),(%{WORD:network.transport}),(%{INT:packet.length}),(%{IP:source.ip}),(%{IP:destination.ip})
+FW_PFSENSE_IP_INFO_WITH_ECN (%{BASE16NUM:tos}),(%{BASE16NUM:ecn}),(%{INT:ttl}),(%{INT:packet.id}),(%{INT:fragment.offset}),(%{WORD:flags}),(%{INT:network.iana_number}),(%{WORD:network.transport}),(%{INT:packet.length}),(%{IP:source.ip}),(%{IP:destination.ip})
+
+FW_PFSENSE_PROTO_INFO (%{FW_PFSENSE_TCP}|%{FW_PFSENSE_UDP}|%{FW_PFSENSE_ICMP})
+
+FW_PFSENSE_TCP (%{INT:source.port}),(%{INT:destination.port}),(%{INT:data.length}),(%{WORD:tcp.flags}),(%{INT:tcp.sequence.number}),,(%{INT:tcp.ack.number}),,(%{DATA:tcp.options})
+FW_PFSENSE_UDP (%{INT:source.port}),(%{INT:destination.port}),(%{INT:data.length})
+FW_PFSENSE_ICMP ((?<icmp.echo.type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),(((%{INT:icmp.echo.code}),(%{INT:icmp.echo.sequence}))|((%{IP:icmp.unreach.port.destination.ip}),(%{WORD:icmp.unreach.port.protocol}),(%{INT:icmp.unreach.port.port}))|((%{IP:icmp.unreach.dest.ip}),(%{WORD:icmp.unreach.proto.protocol}))))
