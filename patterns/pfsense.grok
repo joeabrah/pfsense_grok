@@ -1,5 +1,5 @@
 ### Globomantics pfsense Filter ###
-# %{FW_PFSENSE_LOG}(%{FW_PFSENSE_IP_INFO}|%{FW_PFSENSE_IP_INFO_WITH_ECN})%{FW_PFSENSE_PROTO_INFO}
+# %{FW_PFSENSE_LOG},(%{FW_PFSENSE_IP_INFO}|%{FW_PFSENSE_IP_INFO_WITH_ECN}),%{FW_PFSENSE_PROTO_INFO}
 
 FW_PFSENSE_LOG (%{INT:rule.id}),(%{INT:rule.uuid})?,,(%{INT:rule.tracker.id}),(%{WORD:interface.name}),(%{WORD:reason}),(%{WORD:event.action}),(%{WORD:network.direction}),(%{INT:network.type})
 
